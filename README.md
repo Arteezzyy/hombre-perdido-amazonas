@@ -205,4 +205,4 @@ Proyecto académico - Libre uso educativo.
 ## 👨‍💻 Autor
 
 Ejercicio resuelto para materia de **Inteligencia Artificial / Búsqueda**
-Universidad - Equipo: [Tu nombre aquí]
+Universidad Mayor de San Simón - Equipo: [GRUPO#1]
