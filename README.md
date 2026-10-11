@@ -204,5 +204,5 @@ Proyecto académico - Libre uso educativo.
 
 ## 👨‍💻 Autor
 
-Ejercicio resuelto para materia de **Inteligencia Artificial / Búsqueda**
+Ejercicio resuelto para materia de **Inteligencia Artificial / Búsqueda BFS (Búsqueda en Anchura)**
 Universidad Mayor de San Simón - Equipo: [GRUPO#1]
