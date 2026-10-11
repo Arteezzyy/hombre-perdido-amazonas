@@ -19,13 +19,19 @@ public class MapaAmazonas {
     private final int columnas;
     private final Posicion inicio;
     private final Posicion mar;  // Objetivo: desembocadura del río en el mar
+    private final String nombre;
 
     public MapaAmazonas(int[][] grilla, Posicion inicio, Posicion mar) {
+        this(grilla, inicio, mar, "Mapa");
+    }
+
+    public MapaAmazonas(int[][] grilla, Posicion inicio, Posicion mar, String nombre) {
         this.grilla = grilla;
         this.filas = grilla.length;
         this.columnas = grilla[0].length;
         this.inicio = inicio;
         this.mar = mar;
+        this.nombre = nombre;
     }
 
     /** Crea un mapa de ejemplo: río serpenteante hacia el mar */
@@ -48,7 +54,7 @@ public class MapaAmazonas {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}   // Mar en (14,14)
         };
-        return new MapaAmazonas(grilla, new Posicion(1, 1), new Posicion(14, 14));
+        return new MapaAmazonas(grilla, new Posicion(1, 1), new Posicion(14, 14), "Río serpenteante");
     }
 
     /** Crea un mapa simple: río recto hacia el mar */
@@ -60,7 +66,25 @@ public class MapaAmazonas {
             {0,0,0,0,1},
             {0,0,0,0,1}
         };
-        return new MapaAmazonas(grilla, new Posicion(0, 0), new Posicion(4, 4));
+        return new MapaAmazonas(grilla, new Posicion(0, 0), new Posicion(4, 4), "Río simple 5x5");
+    }
+
+    /**
+     * Crea el mapa "Delta con afluentes": un río principal que baja al mar y tres afluentes
+     * que suben (en contra del objetivo). Los afluentes son callejones sin salida que BFS
+     * inunda y A* ignora: resalta la diferencia entre ambos. Es el mapa por defecto de la GUI.
+     */
+    public static MapaAmazonas crearConAfluentes() {
+        int[][] g = new int[15][15];
+        // Río principal hacia el mar
+        for (int x = 2; x <= 7; x++) g[12][x] = 1;
+        for (int x = 7; x <= 12; x++) g[13][x] = 1;
+        for (int x = 12; x <= 14; x++) g[14][x] = 1;
+        // Afluentes (ramas que van en contra del objetivo)
+        for (int y = 3; y <= 12; y++) g[y][4] = 1;
+        for (int y = 5; y <= 12; y++) g[y][7] = 1;
+        for (int y = 6; y <= 13; y++) g[y][10] = 1;
+        return new MapaAmazonas(g, new Posicion(2, 12), new Posicion(14, 14), "Delta con afluentes");
     }
 
     public boolean esRio(Posicion p) {
@@ -77,6 +101,7 @@ public class MapaAmazonas {
     public Posicion getMar() { return mar; }
     public int getFilas() { return filas; }
     public int getColumnas() { return columnas; }
+    public String getNombre() { return nombre; }
 
     /** Imprime el mapa en consola */
     public void imprimir() {
